@@ -18,31 +18,31 @@ namespace Swivel_AirLines.Profiles
 
                 .ForMember(
                     destination => destination.FirstName,
-                    option => option.MapFrom(src => src.FirstName))
+                    option => option.MapFrom(src => src.FirstName)) // mapping First Name
 
                 .ForMember(
                     destination => destination.LastName,
-                    option => option.MapFrom(src => src.LastName))
+                    option => option.MapFrom(src => src.LastName)) // mapping Last Name
 
                 .ForMember(
                     destination => destination.PilotLisenceNumber,
-                    option => option.MapFrom(src => src.PilotLisenceNumber))
+                    option => option.MapFrom(src => src.PilotLisenceNumber)) // mapping PilotLisenceNumber
 
                 .ForMember(
                     destination => destination.Status,
-                    option => option.MapFrom(src => 1))
+                    option => option.MapFrom(src => 1)) // mapping Status
 
                 .ForMember(
                     destination => destination.FlyingHours,
-                    option => option.MapFrom(src => src.FlyingHours))
+                    option => option.MapFrom(src => src.FlyingHours)) // mapping FlyingHours
 
                 .ForMember(
                     destination => destination.DateCreated,
-                    option => option.MapFrom(src => DateTime.UtcNow))
+                    option => option.MapFrom(src => DateTime.UtcNow)) // mapping DateCreated
 
                 .ForMember(
                     destination => destination.DateUpdated,
-                    option => option.MapFrom(src => DateTime.UtcNow));
+                    option => option.MapFrom(src => DateTime.UtcNow)); // mapping DateUpdated
 
 
         }

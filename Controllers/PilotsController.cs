@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swivel_AirLines.DTO.IncomingDTO;
 using Swivel_AirLines.Models;
 
 
@@ -38,11 +39,24 @@ namespace Swivel_AirLines.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/v1/addpilot")]
-        public IActionResult AddPilot(Pilots pilotsData)
+        public IActionResult AddPilot(PilotIncomingDto pilotsData)
         {
             if (ModelState.IsValid)
             {
-                pilots.Add(pilotsData);
+                var _newPilot = new Pilots()
+                {
+                    Id = Guid.NewGuid(),
+                    Status = 1,
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+
+                    FirstName = pilotsData.FirstName,
+                    LastName = pilotsData.LastName,
+                    PilotLisenceNumber = pilotsData.PilotLisenceNumber,
+                    FlyingHours = pilotsData.FlyingHours,
+                };
+                pilots.Add(_newPilot);
+                //pilots.Add(pilotsData);
                 //return CreatedAtAction(nameof(AddPilot), new { pilotsData.Id }, pilotsData);
                 return Ok(pilots);
             }
@@ -96,11 +110,16 @@ namespace Swivel_AirLines.Controllers
             existingPilot.PilotLisenceNumber = pilotsData.PilotLisenceNumber;
             existingPilot.FirstName = pilotsData.FirstName;
             existingPilot.LastName = pilotsData.LastName;
-            existingPilot.FlyingHoures = pilotsData.FlyingHoures;
+            existingPilot.FlyingHours = pilotsData.FlyingHours;
 
             return Ok(existingPilot); //can use "return NoContent()" instead.
         }
 
+        /// <summary>
+        /// Remove the pilot
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("api/v1/deletepilot/{id}")]
         public IActionResult DeletePilotById(Guid id)

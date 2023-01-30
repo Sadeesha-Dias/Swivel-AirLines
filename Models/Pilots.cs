@@ -7,7 +7,7 @@
         public string LastName { get; set; } = string.Empty;
         public string PilotLisenceNumber { get; set; } = string.Empty;
         public int Status { get; set; }
-        public int FlyingHoures { get; set; }
+        public int FlyingHours { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
     }

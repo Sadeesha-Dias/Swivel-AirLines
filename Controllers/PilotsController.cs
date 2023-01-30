@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swivel_AirLines.DTO.IncomingDTO;
 using Swivel_AirLines.Models;
@@ -14,10 +15,12 @@ namespace Swivel_AirLines.Controllers
     {
         private readonly ILogger<PilotsController> _logger;
         private static List<Pilots> pilots = new List<Pilots>();
+        private readonly IMapper _mapper;
 
-        public PilotsController(ILogger<PilotsController> logger)
+        public PilotsController(ILogger<PilotsController> logger, IMapper mapper)
         {
             _logger = logger;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -43,7 +46,7 @@ namespace Swivel_AirLines.Controllers
         {
             if (ModelState.IsValid)
             {
-                var _newPilot = new Pilots()
+                /*var _newPilot = new Pilots()
                 {
                     Id = Guid.NewGuid(),
                     Status = 1,
@@ -54,8 +57,12 @@ namespace Swivel_AirLines.Controllers
                     LastName = pilotsData.LastName,
                     PilotLisenceNumber = pilotsData.PilotLisenceNumber,
                     FlyingHours = pilotsData.FlyingHours,
-                };
+                }; */
+
+                // --> Creating an object which its type is "Pilots" from the "pilotsData" object which is created from "PilotIncomingDto".
+                var _newPilot = _mapper.Map<Pilots>(pilotsData); 
                 pilots.Add(_newPilot);
+
                 //pilots.Add(pilotsData);
                 //return CreatedAtAction(nameof(AddPilot), new { pilotsData.Id }, pilotsData);
                 return Ok(pilots);

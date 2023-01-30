@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Swivel_AirLines.DTO.IncomingDTO;
+using Swivel_AirLines.DTO.OutgoingDTO;
 using Swivel_AirLines.Models;
 
 namespace Swivel_AirLines.Profiles
@@ -8,6 +9,7 @@ namespace Swivel_AirLines.Profiles
     {
         public PilotProfile() 
         {
+            #region Incoming request DTO mapping
             //Referencing the mapping from the DTO to the entity / model.
             //Source :- PilotIncomingDto | Destination :- Pilots
 
@@ -43,6 +45,29 @@ namespace Swivel_AirLines.Profiles
                 .ForMember(
                     destination => destination.DateUpdated,
                     option => option.MapFrom(src => DateTime.UtcNow)); // mapping DateUpdated
+            #endregion
+
+            #region Outgoing response DTO mapping
+            //Referencing the mapping from the entity / model to DTO.
+            //Source :- Pilots | Destination :- PilotOutgoingDto
+            CreateMap<Pilots, PilotOutgoingDto>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(c => c.Id)) // mapping "Id"
+
+                .ForMember(
+                    dest => dest.FullName,
+                    opt => opt.MapFrom(c => $"{c.FirstName} {c.LastName}")) // concatinating & mapping "FirstName" and "LastName" into "FullName"
+
+                .ForMember(
+                    dest => dest.PilotLisenceNumber,
+                    opt => opt.MapFrom(c => c.PilotLisenceNumber)) // mapping PilotLisenceNumber
+
+                .ForMember(
+                    dest => dest.FlyingHours,
+                    opt => opt.MapFrom(c => c.FlyingHours)); // mapping FlyingHours
+
+            #endregion
 
 
         }

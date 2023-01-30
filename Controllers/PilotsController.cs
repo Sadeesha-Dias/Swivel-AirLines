@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swivel_AirLines.DTO.IncomingDTO;
+using Swivel_AirLines.DTO.OutgoingDTO;
 using Swivel_AirLines.Models;
 
 
@@ -32,7 +33,10 @@ namespace Swivel_AirLines.Controllers
         public IActionResult GetAllPilots()
         {
             var allPilots = pilots.Where(c => c.Status == 1).ToList();
-            return Ok(allPilots);
+
+            // Taking the entire object list of Pilots and mapping it with "PilotOutcomingDto" and returnig the response.
+            var allPilotResponse = _mapper.Map<IEnumerable<PilotOutgoingDto>>(allPilots);
+            return Ok(allPilotResponse);
         }
 
         /// <summary>
@@ -63,9 +67,12 @@ namespace Swivel_AirLines.Controllers
                 var _newPilot = _mapper.Map<Pilots>(pilotsData); 
                 pilots.Add(_newPilot);
 
-                //pilots.Add(pilotsData);
-                //return CreatedAtAction(nameof(AddPilot), new { pilotsData.Id }, pilotsData);
-                return Ok(pilots);
+                // --> Creating the response by the object which its type is "PilotOutgoingDto" from the mapping value of "_newPilot" variable.
+                var _newPilotList = _mapper.Map<PilotOutgoingDto>(_newPilot);
+
+                /* var _newPilotList = _mapper.Map<IEnumerable<PilotOutgoingDto>>(pilots); // --> this one gives full list of pilots as the response. */
+
+                return Ok(_newPilotList);
             }
 
             return new JsonResult("Unable to add new pilot") { StatusCode = 500 };

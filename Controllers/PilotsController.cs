@@ -50,6 +50,7 @@ namespace Swivel_AirLines.Controllers
         {
             if (ModelState.IsValid)
             {
+                // manual mapping without AutoMapper
                 /*var _newPilot = new Pilots()
                 {
                     Id = Guid.NewGuid(),
